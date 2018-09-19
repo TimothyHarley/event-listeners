@@ -17,31 +17,32 @@ const activateDeletes = () => {
             const cardToDelete = buttonIClicked.parentNode.parentNode;
             //could also be .... const CardToDelete = e.target.parentNode.parentNode;
             cardToDelete.remove();
-            //.parentNode
             //.remove() takes stuff off the DOM
         })
     }
 }
+
 
 const printToDom = (stringToPrint, whereToPrint) => {
     document.getElementById(whereToPrint).innerHTML += stringToPrint;
 };
 //This function builds the to do card to the page
 const buildNewToDoCard = (toDo, notes) => {
-  let domString = `<div class="card" style="width: 18rem;">
+  let domString = `<div class="card w-25 m-2">
   <div class="card-body">
     <h5 class="card-title">${toDo}</h5>
     <p class="card-text">${notes}</p>
-    <button href="#" class="btn btn-primary deleteButton">Delete this shit.</button>
+    <button href="#" class="btn btn-danger deleteButton">Delete this shit.</button>
   </div>
 </div>`;
 
     printToDom(domString, 'toDoCards')
-    activateDeletes();
+    activateDeletes(); //called after print to dom because the button needs to load before we can call the function that refers to the button
 }
 
 submitToDoButtonElm.addEventListener("click", (e) => {
-  e.preventDefault();
+  e.preventDefault(); // This was a special case.  We had to prevent the the card from disapearing when it gets subbmitted.  
+  //the default behavor for a <form> tag in html had that default behavior.
 
   buildNewToDoCard(toDoInputElm.value, notesInputElm.value);
 })
